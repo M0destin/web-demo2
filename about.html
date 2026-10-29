@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta.aboutTitle">About Us | Constre Solutions</title>
+  <!-- EDIT: the description shown in search results (Lithuanian version: js/translations.js) -->
+  <meta name="description" data-i18n-attr="content:meta.aboutDescription" content="Constre Solutions: a team of specialists delivering construction projects of every kind, with over 20 years of experience in the construction and energy sectors.">
+  <meta name="theme-color" content="#2B2B2B">
+
+  <!-- Shared settings, company details and page parts (header, footer...).
+       Runs before the page is shown. -->
+  <script src="js/site.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/images/logo-mark.png">
+
+  <!-- Fonts and icons: same as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Michroma&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/light/style.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="about">
+
+  <!--
+    ABOUT US PAGE
+    The header, footer, call-to-action band and company details are shared
+    by all pages and edited once, in js/site.js.
+    Languages: English text is written here, Lithuanian in js/translations.js
+    (matched by data-i18n keys).
+  -->
+
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- HEADER: built from js/site.js (menu links are edited there) -->
+  <script>CONSTRE.render('header')</script>
+
+  <main id="main">
+
+    <!-- ===================================================================
+         PAGE BANNER
+         =================================================================== -->
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__plane" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-i18n-attr="aria-label:breadcrumb.label">
+          <ol>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li aria-current="page" data-i18n="nav.about">About</li>
+          </ol>
+        </nav>
+        <h1 class="page-hero__title" id="page-title" data-i18n="aboutPage.title">About Us</h1>
+        <p class="page-hero__lead" data-i18n="aboutPage.lead">A team of specialists delivering construction projects of every kind, with over 20 years of experience in the construction and energy sectors.</p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         ABOUT
+         PHOTO: replace the .placeholder with <img src="assets/images/about.jpg" alt="...">
+         (portrait, about 1200 × 1500).
+         =================================================================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about">
+          <figure class="about__media" data-reveal>
+            <div class="placeholder" role="img" aria-label="Team photo placeholder" data-i18n-attr="aria-label:about.photoAlt">
+              <span class="placeholder__label" data-i18n="about.photoLabel">Team or on-site photo · 1200 × 1500</span>
+            </div>
+          </figure>
+
+          <div class="about__text" data-reveal>
+            <h2 class="section-title" id="about-title" data-i18n="about.title">Two decades on site</h2>
+            <!-- EDIT: company story. Lithuanian text lives in js/translations.js (about.*). -->
+            <p data-i18n="about.p1">
+              We carry out general construction work on residential, industrial, commercial and
+              agricultural projects. We build reinforced concrete tanks, deliver engineering and
+              structural solutions, and manage construction projects.
+            </p>
+            <p data-i18n="about.p2">
+              Alongside our contracting work, we develop our own residential district projects,
+              putting our construction experience to use.
+            </p>
+            <p data-i18n="about.p3">
+              Our work is built on responsibility, professionalism and quality at every stage of construction.
+            </p>
+            <p><strong data-i18n="about.checkTitle">Our main areas of work:</strong></p>
+            <ul class="checklist">
+              <li><i class="ph-light ph-check" aria-hidden="true"></i><span data-i18n="about.check1">General construction and building projects of every kind</span></li>
+              <li><i class="ph-light ph-check" aria-hidden="true"></i><span data-i18n="about.check2">Construction project management, engineering and structural solutions</span></li>
+              <li><i class="ph-light ph-check" aria-hidden="true"></i><span data-i18n="about.check3">Residential district development and delivery</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- STAT COUNTERS: change data-target (the number) and data-suffix (+, % or empty).
+             Confirmed figures: 20+ years, 50+ projects, 15 team members. Check the satisfied-clients figure is correct. -->
+        <ul class="stats" aria-label="Company figures" data-i18n-attr="aria-label:stats.label">
+          <li class="stat" data-reveal>
+            <span class="stat__num" data-target="20" data-suffix="+">20+</span>
+            <span class="stat__rule" aria-hidden="true"></span>
+            <span class="stat__label" data-i18n="stats.years">Years of Experience</span>
+          </li>
+          <li class="stat" data-reveal>
+            <span class="stat__num" data-target="50" data-suffix="+">50+</span>
+            <span class="stat__rule" aria-hidden="true"></span>
+            <span class="stat__label" data-i18n="stats.projects">Projects Completed</span>
+          </li>
+          <li class="stat" data-reveal>
+            <span class="stat__num" data-target="15" data-suffix="">15</span>
+            <span class="stat__rule" aria-hidden="true"></span>
+            <span class="stat__label" data-i18n="stats.team">Team Members</span>
+          </li>
+          <li class="stat" data-reveal>
+            <span class="stat__num" data-target="98" data-suffix="%">98%</span>
+            <span class="stat__rule" aria-hidden="true"></span>
+            <span class="stat__label" data-i18n="stats.clients">Satisfied Clients</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION BAND: built from js/site.js -->
+    <script>CONSTRE.render('cta')</script>
+
+  </main>
+
+  <!-- FOOTER: built from js/site.js (company details are edited there) -->
+  <script>CONSTRE.render('footer')</script>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

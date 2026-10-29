@@ -1,0 +1,1540 @@
+﻿/* ==========================================================================
+   CONSTRE SOLUTIONS: main stylesheet
+   Mobile-first: the base rules are for phones; @media (min-width: ...)
+   blocks add the tablet and desktop layouts.
+
+   CONTENTS
+    0. Design tokens: colours, fonts, spacing (edit these first)
+    1. Base & browser details
+    2. Shared pieces: container, buttons, placeholders, reveal
+    3. Header & navigation
+    4. Hero
+    5. Sections (shared)
+    6. Services
+    7. About & stat counters
+    8. Projects
+    9. Process timeline
+   10. Call to action band
+   11. Contact
+   12. Footer
+   13. Hover effects (mouse / trackpad only)
+   14. Reduced motion
+   ========================================================================== */
+
+
+/* ==========================================================================
+   0. DESIGN TOKENS
+   Change a value here and it updates everywhere on the site.
+   ========================================================================== */
+:root {
+  /* ---- Brand colours (taken from the logo) ---- */
+  --charcoal: #2B2B2B;          /* primary dark: hero, process, CTA, footer */
+  --charcoal-2: #3A3A3A;        /* lighter charcoal: surfaces and hover on dark */
+  --lime: #8DC63F;              /* accent: use sparingly (buttons, lines, planes) */
+  --lime-press: #7AB12F;        /* accent when pressed / hovered */
+  --grey: #6E6E6E;              /* secondary text on light backgrounds */
+  --grey-light: #F2F2F2;        /* light section background */
+  --grey-line: #DADADA;         /* borders and dividers */
+  --white: #FFFFFF;
+
+  /* Text on dark backgrounds */
+  --on-dark: #FFFFFF;
+  --on-dark-soft: #C4C4C4;      /* secondary text on charcoal (8:1 contrast) */
+  --line-on-dark: rgba(255, 255, 255, 0.14);
+
+  /* Form messages */
+  --error: #B42318;
+
+  /* Form field border: 3:1 against white so the field edge is visible */
+  --field-line: #BDBDBD;
+
+  /* Keyboard focus ring: charcoal on light sections, lime on dark ones */
+  --focus: var(--charcoal);
+
+  /* ---- Fonts ---- */
+  --font-display: "Michroma", "Eurostile", "Arial", sans-serif;   /* headings */
+  --font-body: "Archivo", "Helvetica Neue", "Arial", sans-serif;  /* everything else */
+  --label-stretch: 118%;        /* Archivo is a width-variable font: labels use a wider cut */
+
+  /* ---- Type scale ---- */
+  --text-xs: 0.75rem;           /* 12px labels */
+  --text-sm: 0.875rem;          /* 14px */
+  --text-base: 1.0625rem;       /* 17px body */
+  --text-md: 1.1875rem;         /* 19px lead text */
+  --text-lg: 1.375rem;          /* 22px */
+  --text-h3: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
+  --text-h2: clamp(1.5rem, 1rem + 2vw, 2.6rem);
+  --text-stat: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+
+  --tracking-display: 0.04em;   /* headings: generous, like "SOLUTIONS" in the logo */
+  --tracking-label: 0.16em;     /* small uppercase labels */
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-space: clamp(4.5rem, 3rem + 5vw, 8.5rem);   /* top/bottom padding of sections */
+
+  /* ---- Layout ---- */
+  --container: 1240px;
+  --gutter: clamp(1rem, 0.4rem + 3vw, 2.5rem);          /* side padding, min 16px */
+  --header-h: 72px;
+  --angle: clamp(32px, 6vw, 96px);                      /* height of the angled section edges */
+
+  /* ---- Shape: sharp and industrial ---- */
+  --radius: 0;
+  --cut: 12px;                  /* the angled corner on buttons */
+
+  /* Drawing-sheet grid shown faintly on the dark sections */
+  --sheet-grid:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0 / 64px 64px;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);            /* entrances */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);       /* things moving on screen */
+  --fast: 160ms;
+  --medium: 280ms;
+}
+
+@media (min-width: 1024px) {
+  :root { --header-h: 80px; }
+}
+
+
+/* ==========================================================================
+   1. BASE & BROWSER DETAILS
+   ========================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);      /* anchor links stop below the fixed header */
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent; /* no grey flash on tap (mobile) */
+  scrollbar-color: var(--grey) var(--grey-light);
+  accent-color: var(--lime);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--charcoal);
+  background: var(--white);
+  caret-color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.menu-open { overflow: hidden; }
+/* Set by js/site.js until js/main.js has applied the chosen language */
+.i18n-pending body { visibility: hidden; }
+
+::selection {
+  background: var(--lime);
+  color: var(--charcoal);
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+figure { margin: 0; }
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button, a, .btn { touch-action: manipulation; }
+button, .btn, .filter { -webkit-user-select: none; user-select: none; }
+
+/* Keyboard focus: always visible */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+/* On dark surfaces the ring turns lime so it stays visible */
+.site-header,
+.hero,
+.page-hero,
+.section--dark,
+.cta,
+.details,
+.site-footer { --focus: var(--lime); }
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -120px;
+  z-index: 300;
+  padding: var(--space-3) var(--space-4);
+  background: var(--lime);
+  color: var(--charcoal);
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--space-4); }
+
+/* Elements with the hidden attribute stay hidden, even if a rule gives them display: flex/grid */
+[hidden] { display: none !important; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Phosphor icons sit on the text baseline */
+[class^="ph-"], [class*=" ph-"] { line-height: 1; }
+
+
+/* ==========================================================================
+   2. SHARED PIECES
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Small uppercase labels (form labels, title blocks, stats) */
+.field label,
+.title-block dt,
+.stat__label,
+.details dt,
+.footer__heading,
+.breadcrumb ol {
+  font-family: var(--font-body);
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 50px;
+  padding: 0.8rem 1.6rem;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--fast) ease,
+    color var(--fast) ease,
+    border-color var(--fast) ease,
+    transform var(--fast) var(--ease-out);
+}
+.btn:active { transform: scale(0.97); }
+.btn i { font-size: 1.15em; transition: transform var(--medium) var(--ease-out); }
+
+/* Cut corner that echoes the angles in the logo.
+   A normal focus outline would be clipped by it, so it is drawn inside. */
+.btn--primary,
+.btn--dark {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+.btn--primary:focus-visible,
+.btn--dark:focus-visible { outline: 2px solid var(--focus-on-btn); outline-offset: -5px; }
+
+/* Green button */
+.btn--primary {
+  --focus-on-btn: var(--charcoal);
+  background: var(--lime);
+  color: var(--charcoal);
+}
+.btn--primary:active { background: var(--lime-press); }
+
+.btn--large { min-height: 56px; padding-inline: 2rem; }
+
+/* Dark button for light sections (e.g. "All Projects"), same cut corner, lime arrow */
+.btn--dark {
+  --focus-on-btn: var(--lime);
+  background: var(--charcoal);
+  color: var(--white);
+}
+.btn--dark i { color: var(--lime); }
+.btn--dark:active { background: var(--charcoal-2); }
+
+.btn[aria-busy="true"] { cursor: progress; opacity: 0.75; }
+
+/* ---- Image placeholders ----
+   Hatched grey boxes with a label. Swap each one for an <img> later:
+   images placed in a media box fill it automatically (object-fit: cover). */
+.placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  padding: var(--space-5);
+  background-color: var(--grey-line);
+  background-image: repeating-linear-gradient(-45deg, transparent 0 18px, rgba(43, 43, 43, 0.07) 18px 19px);
+  color: var(--charcoal);
+  text-align: center;
+}
+.placeholder__label {
+  font-stretch: var(--label-stretch);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.7;
+  text-transform: uppercase;
+  text-wrap: balance;            /* even line lengths when the label wraps */
+}
+.placeholder--dark {
+  background-color: var(--charcoal-2);
+  background-image: repeating-linear-gradient(-45deg, transparent 0 18px, rgba(255, 255, 255, 0.05) 18px 19px);
+  color: var(--on-dark-soft);
+}
+.hero__media img,
+.about__media img,
+.project__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Scroll reveal ----
+   Only switched on when JavaScript adds .reveal-on to <html>, so the page
+   is never left blank if scripts fail. */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+.reveal-on [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ==========================================================================
+   3. HEADER & NAVIGATION
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  padding-top: env(safe-area-inset-top, 0px);
+  color: var(--on-dark);
+  transition: background-color var(--medium) ease, box-shadow var(--medium) ease;
+}
+/* Added by JS once the hero has scrolled away, and while the menu is open */
+.site-header.is-solid,
+.site-header.is-open {
+  background: var(--charcoal);
+  box-shadow: 0 1px 0 var(--line-on-dark), 0 10px 30px rgba(20, 20, 20, 0.22);
+}
+
+.header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: var(--header-h);
+}
+
+/* Language switch (EN / LT). Sits next to the hamburger on phones,
+   after the Get a Quote button on desktop. */
+.lang-switch {
+  position: relative;
+  z-index: 2;                          /* stays clickable above the open mobile menu */
+  display: flex;
+  margin-left: auto;
+  border: 1px solid var(--line-on-dark);
+}
+.lang-switch__btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--on-dark-soft);
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  cursor: pointer;
+  transition: color var(--fast) ease, background-color var(--fast) ease;
+}
+.lang-switch__btn + .lang-switch__btn { border-left: 1px solid var(--line-on-dark); }
+.lang-switch__btn[aria-pressed="true"] {
+  color: var(--on-dark);
+  box-shadow: inset 0 -2px 0 var(--lime);
+}
+.lang-switch__btn:focus-visible { outline-offset: -3px; }
+
+/* Logo lock-up */
+.brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+.brand__mark { width: auto; height: 40px; }
+.brand__word { width: auto; height: 22px; }
+
+/* Animated logo (js/main.js section 9): the "C" from assets/logo-animation.mp4
+   builds itself on a canvas, then the wordmark slides in beside it.
+   If the video can't play, the static logo above is shown instead. */
+.brand__anim { display: none; width: auto; height: 40px; }
+html.logo-pending .brand__mark,
+html.logo-pending .brand__word { visibility: hidden; }
+.brand--anim .brand__mark { display: none; }
+.brand--anim .brand__anim { display: block; }
+.brand--anim .brand__word { opacity: 0; transform: translateX(-10px); }
+/* Fade only on the way in, so the wordmark never flashes when hidden */
+.brand--anim.brand--done .brand__word {
+  opacity: 1;
+  transform: none;
+  transition: opacity 500ms ease-out, transform 700ms var(--ease-out);
+}
+
+/* Hamburger */
+.menu-toggle {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line-on-dark);
+  background: transparent;
+  cursor: pointer;
+}
+.menu-toggle__icon,
+.menu-toggle__icon span,
+.menu-toggle__icon::before,
+.menu-toggle__icon::after { display: block; width: 20px; height: 1.5px; }
+.menu-toggle__icon { position: relative; height: 14px; }
+.menu-toggle__icon span,
+.menu-toggle__icon::before,
+.menu-toggle__icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  background: var(--on-dark);
+  transition: transform var(--medium) var(--ease-out), opacity var(--fast) ease;
+}
+.menu-toggle__icon::before { top: 0; }
+.menu-toggle__icon span { top: 6.25px; }
+.menu-toggle__icon::after { bottom: 0; }
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::before { transform: translateY(6.25px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon span { opacity: 0; }
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::after { transform: translateY(-6.25px) rotate(-45deg); }
+
+/* Mobile menu: full-screen charcoal panel */
+.site-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + var(--space-6)) var(--gutter) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+  background: var(--charcoal);
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--medium) ease, visibility 0s linear var(--medium);
+}
+.site-header.is-open .site-nav {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--medium) ease;
+}
+
+.site-nav__list { display: grid; }
+.site-nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line-on-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 0.9rem + 1.5vw, 1.5rem);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+/* Links slide up one after another when the menu opens */
+.site-nav__list li {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+}
+.site-header.is-open .site-nav__list li { opacity: 1; transform: none; }
+.site-header.is-open .site-nav__list li:nth-child(2) { transition-delay: 40ms; }
+.site-header.is-open .site-nav__list li:nth-child(3) { transition-delay: 80ms; }
+.site-header.is-open .site-nav__list li:nth-child(4) { transition-delay: 120ms; }
+.site-header.is-open .site-nav__list li:nth-child(5) { transition-delay: 160ms; }
+.site-header.is-open .site-nav__list li:nth-child(6) { transition-delay: 200ms; }
+
+.site-nav__link.is-active { color: var(--lime); }
+.site-nav__cta { align-self: stretch; }
+
+@media (min-width: 1024px) {
+  .brand__mark,
+  .brand__anim { height: 46px; }
+  .brand__word { height: 25px; }
+}
+
+/* Desktop navigation: a single line in the header.
+   Starts at 1360px so the longer Lithuanian labels still fit on one line;
+   below that, the hamburger menu is used. If you change 1360 here,
+   change it in js/main.js (section 3, desktopQuery) too. */
+@media (min-width: 1360px) {
+  .menu-toggle { display: none; }
+  .site-nav__link { white-space: nowrap; }
+
+  .site-nav {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+    margin-left: auto;
+    padding: 0;
+    background: none;
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    transition: none;
+  }
+  .site-nav__list { display: flex; flex-shrink: 0; gap: clamp(0.9rem, 0.2rem + 1vw, 1.75rem); }  /* never squashed: the breakpoint guarantees room */
+  .site-nav__list li { opacity: 1; transform: none; }
+  .site-nav__link {
+    padding-block: var(--space-2);
+    border: 0;
+    font-family: var(--font-body);
+    font-stretch: var(--label-stretch);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;             /* a little tighter than other labels so the LT menu fits */
+  }
+  /* Thin lime rule under the active / hovered link */
+  .site-nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--medium) var(--ease-out);
+  }
+  .site-nav__link.is-active { color: var(--on-dark); }
+  .site-nav__link.is-active::after { transform: scaleX(1); }
+  .site-nav__cta { align-self: auto; min-height: 44px; padding-inline: 1.25rem; }
+  .lang-switch { margin-left: 0; }
+}
+
+
+/* ==========================================================================
+   4. HERO
+   ========================================================================== */
+/* Dark band with the drawing grid and the angled bottom edge
+   (shared by the homepage hero and the inner pages' banner) */
+.hero,
+.page-hero {
+  position: relative;
+  padding-top: calc(var(--header-h) + var(--space-8));
+  background: var(--sheet-grid), var(--charcoal);
+  color: var(--on-dark);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--angle)), 0 100%);
+}
+.hero { padding-bottom: calc(var(--angle) + var(--section-space)); }
+
+/* Text on the left, photo on the right from 960px; stacked on phones */
+.hero__inner {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--space-9);
+  }
+}
+
+.hero__title {
+  font-size: clamp(1.6rem, 0.9rem + 2.4vw, 3rem);
+  line-height: 1.25;              /* room for Lithuanian accents (Ą, Ų, Ū) */
+}
+
+.hero__lead {
+  max-width: 46ch;
+  margin-top: var(--space-5);
+  font-size: var(--text-md);
+  color: var(--on-dark-soft);
+}
+
+.hero__cta { margin-top: var(--space-7); }
+
+/* Photo box: a lighter charcoal with a hairline frame, so it stands out
+   from the dark band until the photo is added */
+.hero__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--charcoal-2);
+  outline: 1px solid var(--line-on-dark);
+}
+.hero__media .placeholder { min-height: 0; }
+/* Tablets: a wider box so the photo doesn't fill the whole screen */
+@media (min-width: 640px) and (max-width: 959px) {
+  .hero__media { aspect-ratio: 16 / 9; }
+}
+
+/* The lime plane from the logo: a triangle in the bottom-left corner */
+.hero__plane {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 20%;
+  aspect-ratio: 0.9;
+  background: var(--lime);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+/* Hero load sequence: text settles in, the photo is revealed upwards,
+   then the lime corner slides in */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__title { animation: settle 900ms var(--ease-out) both; }
+  .hero__lead { animation: settle 900ms var(--ease-out) 120ms both; }
+  .hero__cta { animation: settle 900ms var(--ease-out) 240ms both; }
+  .hero__media { animation: reveal-up 1100ms var(--ease-in-out) 150ms both; }
+  .hero__plane { animation: corner-in 900ms var(--ease-out) 900ms both; }
+}
+@keyframes corner-in {
+  from { transform: translate(-100%, 100%); }
+  to { transform: none; }
+}
+@keyframes reveal-up {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes settle {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes plane-in {
+  from { opacity: 0; transform: translate(48px, 32px); }
+  to { opacity: 1; transform: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   Page banner (inner pages such as about.html): a shorter version of the
+   hero above, with its own lime plane.
+   -------------------------------------------------------------------------- */
+.page-hero { padding-bottom: calc(var(--angle) + var(--space-7)); }
+.page-hero__content { position: relative; display: grid; gap: var(--space-4); }
+.page-hero__title { font-size: clamp(2rem, 1rem + 4vw, 4rem); line-height: 1.1; }
+.page-hero__lead { max-width: 52ch; font-size: var(--text-md); color: var(--on-dark-soft); }
+/* Sits low so the angled bottom edge cuts it on the slope (as on the home
+   hero), and stays below the lead text on phones */
+.page-hero__plane {
+  position: absolute;
+  right: clamp(1rem, 7vw, 8rem);
+  bottom: calc(var(--angle) * 0.35);
+  width: clamp(80px, 12vw, 170px);
+  aspect-ratio: 1.45;
+  background: var(--lime);
+  clip-path: polygon(0 38%, 47% 0, 100% 30%, 0 100%);
+}
+
+/* Breadcrumb: Home / About us */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--on-dark-soft);
+}
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: var(--space-2);
+  color: var(--lime);
+}
+.breadcrumb a { text-decoration: none; }
+.breadcrumb [aria-current="page"] { color: var(--on-dark); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-hero__title { animation: settle 900ms var(--ease-out) both; }
+  .page-hero__lead { animation: settle 900ms var(--ease-out) 150ms both; }
+  .page-hero__plane { animation: plane-in 1100ms var(--ease-out) 150ms both; }
+}
+
+
+/* ==========================================================================
+   5. SECTIONS (shared)
+   ========================================================================== */
+.section {
+  position: relative;
+  padding-block: var(--section-space);
+}
+.section--grey { background: var(--grey-light); }
+.section--dark { background: var(--sheet-grid), var(--charcoal); color: var(--on-dark); }
+
+/* Angled top edge, cut on the logo's slope */
+.section--angled {
+  margin-top: calc(var(--angle) * -1);
+  padding-top: calc(var(--section-space) + var(--angle));
+  clip-path: polygon(0 var(--angle), 100% 0, 100% 100%, 0 100%);
+}
+
+.section-head {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 62ch;
+  margin-bottom: var(--space-8);
+}
+.section-title { font-size: var(--text-h2); }
+.section-lead { font-size: var(--text-md); color: var(--grey); }
+.section--dark .section-lead { color: var(--on-dark-soft); }
+
+
+/* Running text pages (privacy.html) */
+.prose { display: grid; gap: var(--space-4); }
+.prose > * { max-width: 70ch; }
+.prose h2 { margin-top: var(--space-5); font-size: var(--text-h3); }
+.prose p { color: var(--grey); }
+.prose p a { color: var(--charcoal); }
+
+
+/* ==========================================================================
+   6. SERVICES
+   A ruled grid: the 1px gap shows the background through as hairlines.
+   ========================================================================== */
+.services {
+  display: grid;
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+}
+
+.service {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+  background: var(--white);
+}
+/* Lime rule that grows along the top edge on hover */
+.service::before {
+  content: "";
+  position: absolute;
+  inset: -1px -1px auto;
+  height: 3px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 450ms var(--ease-out);
+}
+.service__icon {
+  margin-bottom: var(--space-3);
+  font-size: 2.75rem;
+  color: var(--charcoal);
+  transition: transform 450ms var(--ease-out);
+}
+.service__title { font-size: var(--text-h3); line-height: 1.45; }
+.service p { color: var(--grey); max-width: 38ch; }
+
+@media (min-width: 640px) {
+  .services { grid-template-columns: repeat(2, 1fr); }
+  .service { padding: var(--space-7) var(--space-6); }
+}
+
+
+/* ==========================================================================
+   7. ABOUT & STAT COUNTERS
+   ========================================================================== */
+.about {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.about__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+  margin-right: var(--space-5);        /* room for the offset plane */
+}
+.about__media > * { position: relative; z-index: 1; }
+/* Lime plane behind the photo, offset like a second layer of the logo */
+.about__media::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--space-5) * -1);
+  bottom: calc(var(--space-5) * -1);
+  width: 55%;
+  height: 45%;
+  background: var(--lime);
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+}
+
+.about__text { display: grid; gap: var(--space-4); min-width: 0; }
+.about__text .section-title { margin-bottom: var(--space-2); }
+.about__text > p { max-width: 62ch; color: var(--grey); }
+
+.checklist {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  font-weight: 600;
+}
+.checklist li { display: flex; align-items: center; gap: var(--space-3); }
+.checklist i {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background: var(--charcoal);
+  color: var(--lime);
+  font-size: 0.95rem;
+}
+
+/* Stat counters, each underlined by a dimension line (as on a drawing) */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7) var(--space-5);
+  margin-top: var(--space-9);
+}
+.stat { display: grid; align-content: start; gap: var(--space-3); }
+.stat__num {
+  font-family: var(--font-display);
+  font-size: var(--text-stat);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+/* Dimension line: a hairline with end ticks, drawn in when it scrolls into view */
+.stat__rule {
+  display: block;
+  height: 11px;
+  border-inline: 1px solid var(--grey);
+  background: linear-gradient(var(--grey), var(--grey)) center / 100% 1px no-repeat;
+  transform-origin: left;
+  transition: transform 1100ms var(--ease-in-out) 150ms;
+}
+.stat:first-child .stat__rule {
+  border-color: var(--charcoal);
+  background-image: linear-gradient(var(--charcoal), var(--charcoal));
+}
+.reveal-on .stat:not(.is-in) .stat__rule { transform: scaleX(0); }
+.stat__label { color: var(--grey); }
+/* Small note marking text that still needs replacing (privacy.html) */
+.placeholder-note {
+  justify-self: start;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--grey);
+}
+
+@media (min-width: 960px) {
+  .about { grid-template-columns: 5fr 6fr; gap: var(--space-9); }
+  .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
+}
+
+
+/* ==========================================================================
+   8. PROJECTS
+   ========================================================================== */
+.projects-head {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+.projects-head .section-title { margin-bottom: var(--space-4); }
+
+/* Phones: a dropdown, styled like the selected filter button.
+   From 640px: the row of buttons instead. */
+.filters { display: none; gap: var(--space-2); }
+.filter-select { position: relative; z-index: 5; }   /* the open list sits above the cards */
+
+/* Closed: looks like the selected filter button */
+.filter-select__button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: 0.75rem 1rem 0.75rem 1.1rem;
+  border: 1px solid var(--charcoal);
+  border-radius: var(--radius);
+  background: var(--charcoal);
+  box-shadow: inset 0 -3px 0 var(--lime);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.filter-select__button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.filter-select__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;             /* a long category ends in "..." on narrow phones */
+}
+.filter-select__icon {
+  flex: none;
+  font-size: 1.25rem;
+  color: var(--lime);
+  transition: transform 180ms var(--ease-out);
+}
+.filter-select.is-open .filter-select__icon { transform: rotate(180deg); }
+
+/* Open: a charcoal panel directly under the button, same width */
+.filter-select__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: var(--space-1) 0;
+  list-style: none;
+  border: 1px solid var(--charcoal-2);
+  border-top: 0;
+  background: var(--charcoal);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms var(--ease-out), visibility 0s linear 180ms;
+}
+.filter-select.is-open .filter-select__list {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 180ms ease, transform 180ms var(--ease-out), visibility 0s;
+}
+.filter-select__option {
+  display: flex;
+  align-items: center;
+  min-height: 48px;                    /* comfortable tap target */
+  padding: 0.6rem 1.1rem;
+  color: var(--on-dark-soft);
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.4;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--fast) ease, color var(--fast) ease;
+}
+/* The option under the mouse or reached with the arrow keys (js/main.js
+   marks it .is-active, so only one option is ever highlighted) */
+.filter-select__option.is-active { background: var(--charcoal-2); color: var(--on-dark); }
+/* The chosen category: lime text and a lime bar on the left */
+.filter-select__option[aria-selected="true"] {
+  color: var(--lime);
+  box-shadow: inset 3px 0 0 var(--lime);
+}
+@media (min-width: 640px) {
+  .filter-select { display: none; }
+  /* Buttons centred; a shorter last row sits in the middle under the first */
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; }
+  .projects-head:has(.filters) > .section-lead { text-align: center; }   /* the line above the buttons */
+}
+.filter {
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  /* 128ms: 20% quicker than the site-wide --fast (160ms) */
+  transition: background-color 128ms ease, border-color 128ms ease, color 128ms ease, transform 128ms var(--ease-out);
+}
+.filter:active { transform: scale(0.97); }
+.filter[aria-pressed="true"] {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--white);
+  box-shadow: inset 0 -3px 0 var(--lime);
+}
+
+.projects {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--grey-line);
+}
+
+.project__media {
+  position: relative;
+  flex: none;                          /* photos in a row stay the same height */
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--grey-line);
+}
+.project__media > * {
+  position: absolute;
+  inset: 0;
+  transition: transform 900ms var(--ease-out);
+}
+/* Photo is revealed upwards the first time it scrolls into view */
+.reveal-on .project .project__media { clip-path: inset(100% 0 0 0); transition: clip-path 1000ms var(--ease-in-out); }
+.reveal-on .project.is-in .project__media { clip-path: inset(0 0 0 0); }
+
+/* Title block: like the corner box on a construction drawing */
+.title-block {
+  flex: 1 1 auto;                      /* the title block absorbs any spare height */
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  border-top: 1px solid var(--grey-line);
+}
+.title-block > div {
+  display: grid;
+  align-content: start;                /* label and value stay together; spare height goes below */
+  gap: 2px;
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+}
+.title-block > div + div { border-left: 1px solid var(--grey-line); }
+.title-block__name {
+  grid-column: 1 / -1;
+  border-bottom: 1px solid var(--grey-line);
+}
+.title-block > div:nth-child(2) { border-left: 0; }
+.title-block dt { font-size: 0.6875rem; color: var(--grey); }
+.title-block dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.title-block__name dd {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h3);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Homepage preview (3 cards): one column until there's room for all three in a row */
+  .projects--preview { grid-template-columns: minmax(0, 1fr); }
+}
+@media (min-width: 900px) {
+  .projects--preview { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.projects-head .btn { justify-self: start; }
+@media (min-width: 1024px) {
+  .projects-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+  /* projects.html: the filter buttons take the full width under the line of text */
+  .projects-head > .filters { grid-column: 1 / -1; }
+  .projects[data-filter="all"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* "All": the first project is shown large */
+  .projects[data-filter="all"] .project:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .projects[data-filter="all"] .project:first-child .project__media { flex: 1 1 auto; aspect-ratio: auto; min-height: 320px; }
+  .projects[data-filter="all"] .project:first-child .title-block { flex: none; }
+}
+
+/* Filter animation (View Transitions, where the browser supports them) */
+::view-transition-group(*) {
+  animation-duration: 416ms;
+  animation-timing-function: var(--ease-in-out);
+}
+::view-transition-old(*),
+::view-transition-new(*) { height: 100%; }
+/* Keep the buttons clickable while cards are still moving, so visitors can
+   click through the filters without waiting for each animation to end */
+::view-transition { pointer-events: none; }
+/* Only the cards animate: the rest of the page (including the pressed
+   button) switches straight away instead of cross-fading */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; }
+
+
+/* ==========================================================================
+   9. PROCESS TIMELINE
+   Vertical on phones, horizontal from 900px.
+   ========================================================================== */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: var(--space-7);
+}
+/* The connecting line, with a lime start */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 27px;
+  width: 1px;
+  background: linear-gradient(var(--lime) 0 var(--space-8), var(--line-on-dark) var(--space-8));
+}
+
+.step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding-left: calc(56px + var(--space-5));
+}
+.step__num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--lime);
+  background: var(--charcoal);
+  color: var(--lime);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+/* Phones: hide the line below the last number so it ends at step 4 */
+.step:last-child::after {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 56px;
+  bottom: calc(var(--space-1) * -1);
+  width: 1px;
+  background: var(--charcoal);
+}
+.step__title { font-size: var(--text-lg); }
+.step p { max-width: 34ch; color: var(--on-dark-soft); }
+
+@media (min-width: 900px) {
+  .timeline {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .timeline::before {
+    top: 28px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 1px;
+    background: linear-gradient(to right, var(--lime) 0 12%, var(--line-on-dark) 12%);
+  }
+  .step { padding-left: 0; padding-top: calc(56px + var(--space-6)); }
+  .step:last-child::after { display: none; }
+}
+
+
+/* ==========================================================================
+   10. CALL TO ACTION BAND
+   ========================================================================== */
+.cta {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-9);
+  background: var(--sheet-grid), var(--charcoal);
+  color: var(--on-dark);
+}
+/* Large lime slab on the right, cut on the logo's angle */
+.cta__plane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: clamp(80px, 22%, 340px);
+  background: var(--lime);
+  clip-path: polygon(55% 0, 100% 0, 100% 100%, 0 100%);
+}
+.cta__inner {
+  position: relative;
+  display: grid;
+  gap: var(--space-6);
+  justify-items: start;
+}
+.cta__copy { display: grid; gap: var(--space-4); max-width: 40ch; padding-right: var(--space-8); }
+.cta__title { font-size: var(--text-h2); }
+.cta__copy p { font-size: var(--text-md); color: var(--on-dark-soft); }
+
+@media (min-width: 900px) {
+  .cta__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding-right: clamp(80px, 20%, 300px);
+  }
+  .cta__copy { padding-right: 0; }
+}
+
+
+/* ==========================================================================
+   11. CONTACT
+   ========================================================================== */
+.contact {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+  min-width: 0;
+}
+.form__row { display: grid; gap: var(--space-5); }
+.field { display: grid; gap: var(--space-2); min-width: 0; }
+.field__optional { color: var(--grey); font-weight: 500; letter-spacing: 0.06em; text-transform: none; font-stretch: 100%; }
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--field-line);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-size: 1rem;                     /* 16px+: stops iPhone zooming into fields */
+  transition: border-color var(--fast) ease, box-shadow var(--fast) ease;
+}
+.field textarea { min-height: 160px; resize: vertical; line-height: 1.55; }
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--charcoal);
+  box-shadow: 0 0 0 3px var(--lime);
+}
+.field [aria-invalid="true"] { border-color: var(--error); }
+.field [aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.25); }
+
+.field__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--error);
+}
+.field__error:empty { display: none; }
+
+.form__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+/* Result after sending: a lime tick (sent) or a red warning (error) */
+.form__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1 1 260px;
+  padding: var(--space-3) var(--space-5) var(--space-3) var(--space-3);
+  background: var(--grey-light);
+  font-weight: 600;
+}
+.form__status:focus { outline: none; }
+.form__status a { font-weight: 700; }
+/* Lime tick in a charcoal square, same as the About checklist */
+.form__status i {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--charcoal);
+  color: var(--lime);
+  font-size: 1.1rem;
+}
+.form__status.is-error { color: var(--error); }
+.form__status.is-error i { background: var(--error); color: var(--white); }
+
+/* Privacy note under the button */
+.form__privacy { max-width: 62ch; font-size: var(--text-sm); color: var(--grey); }
+.form__privacy a { color: var(--charcoal); }
+
+/* Honeypot: off-screen for people (and screen readers); bots still fill it in */
+.form__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+/* Cloudflare Turnstile: usually invisible (0 high). The negative margin cancels
+   the form gap, so the button sits where it always did. */
+.form__turnstile { margin-top: calc(var(--space-5) * -1); }
+
+/* Company details */
+.contact__info {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+  min-width: 0;
+}
+.details {
+  display: grid;
+  margin: 0;
+  padding: var(--space-6);
+  background: var(--charcoal);
+  color: var(--on-dark);
+}
+.details > div {
+  display: grid;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line-on-dark);
+}
+.details > div:first-child { padding-top: 0; }
+.details > div:last-child { padding-bottom: 0; border-bottom: 0; }
+.details dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--on-dark-soft);
+}
+.details dt i { font-size: 1.1rem; color: var(--lime); }
+.details dd { margin: 0; overflow-wrap: anywhere; }
+.details a { text-decoration: none; }
+
+/* Google map: toned to the grey palette; full colour on hover (mouse) */
+.map {
+  aspect-ratio: 16 / 10;
+  max-width: 100%;
+  border: 1px solid var(--grey-line);
+  background: var(--grey-line);       /* shows while the map loads */
+}
+.map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(0.85) contrast(1.05);
+  transition: filter var(--medium) ease;
+}
+.map__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  min-height: 44px;
+  font-stretch: var(--label-stretch);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.map__link i { font-size: 1.1em; }
+
+@media (min-width: 640px) {
+  .form__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .contact { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-9); }
+}
+
+
+/* ==========================================================================
+   12. FOOTER
+   Compact: one row of brand / links / contact, then a thin bottom bar.
+   Plain charcoal (no drawing grid) so it reads apart from the CTA band above.
+   ========================================================================== */
+.site-footer {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--charcoal);
+  border-top: 1px solid var(--line-on-dark);
+  color: var(--on-dark-soft);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+/* Short lime tick sitting on the top rule, aligned with the content edge */
+.site-footer > .container::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin-top: -1.5px;
+  background: var(--lime);
+}
+
+.footer__main {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-7) var(--space-6);
+}
+
+/* Brand: the header's horizontal logo, a short line and social icons */
+.footer__logo { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: var(--space-4); }
+.footer__logo img:first-child { width: auto; height: 38px; }
+.footer__logo img:last-child { width: auto; height: 20px; }
+.footer__brand p { max-width: 42ch; margin-bottom: var(--space-4); }
+
+.footer__heading { margin-bottom: var(--space-3); color: var(--on-dark); }
+.footer__col a,
+.footer__brand a { text-decoration: none; }
+
+/* Quick links in two short columns */
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: var(--space-1) var(--space-6);
+}
+
+/* Contact lines with a small lime icon */
+.footer__contact { display: grid; gap: var(--space-2); }
+.footer__contact li { display: flex; align-items: flex-start; gap: var(--space-2); min-width: 0; }
+.footer__contact i { flex-shrink: 0; margin-top: 0.2em; font-size: 1.05rem; color: var(--lime); }
+.footer__contact a { overflow-wrap: anywhere; }
+
+.social { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.social a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-on-dark);
+  color: var(--on-dark);
+  font-size: 1.15rem;
+  transition: background-color var(--fast) ease, border-color var(--fast) ease, color var(--fast) ease;
+}
+
+/* Bottom bar: copyright and back to top */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--line-on-dark);
+  font-size: var(--text-xs);
+}
+.footer__bottom a { display: inline-flex; align-items: center; gap: var(--space-2); text-decoration: none; }
+
+@media (min-width: 640px) {
+  .footer__main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer__brand { grid-column: 1 / -1; }
+}
+@media (min-width: 1024px) {
+  .footer__main {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-8);
+  }
+  .footer__brand { grid-column: auto; }
+}
+
+/* ==========================================================================
+   13. HOVER EFFECTS
+   Only for devices with a real pointer, so they never "stick" after a tap.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover { background: var(--lime-press); }
+  .btn:hover i.ph-arrow-right { transform: translateX(4px); }
+  .btn--dark:hover { background: var(--charcoal-2); }
+
+  .site-nav__link:hover { color: var(--lime); }
+  .lang-switch__btn:hover { color: var(--on-dark); background: var(--charcoal-2); }
+  .map:hover iframe { filter: none; }
+  .breadcrumb a:hover { color: var(--white); text-decoration: underline; text-decoration-color: var(--lime); }
+  .map__link:hover { text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 2px; }
+  .site-nav__link:hover::after { transform: scaleX(1); }
+
+  .service:hover::before { transform: scaleX(1); }
+  .service:hover .service__icon { transform: translateY(-3px); }
+
+  .filter:hover { border-color: var(--charcoal); }
+
+  .project:hover .project__media > * { transform: scale(1.03); }
+  .project:hover .title-block { border-top-color: var(--charcoal); }
+
+  .details a:hover,
+  .footer__col a:hover,
+  .footer__bottom a:hover { color: var(--white); text-decoration: underline; text-decoration-color: var(--lime); }
+  .social a:hover { background: var(--lime); border-color: var(--lime); color: var(--charcoal); }
+}
+
+
+/* ==========================================================================
+   14. REDUCED MOTION
+   Keeps fades, removes movement.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  ::view-transition-group(*) { animation: none; }
+}

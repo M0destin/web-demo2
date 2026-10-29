@@ -1,0 +1,75 @@
+CONSTRE SOLUTIONS - WHAT YOU NEED TO DO TO MAKE THE QUOTE FORM WORK
+=====================================================================
+Tick each box when done. Details for every step: CONTACT_FORM_SETUP.md
+
+IMPORTANT: right now constre.com only has a parking page at Interneto
+vizija. There is no website hosting and NO MAILBOX yet, so email sent
+to info@constre.com does not arrive anywhere. Steps 1-2 fix that.
+
+
+1. HOSTING AT INTERNETO VIZIJA (iv.lt client area)
+   [ ] Order a hosting plan with PHP and email, attach constre.com
+   [ ] In the hosting panel: PHP 8.x (minimum 7.4), "curl" switched on
+   [ ] Switch on the free SSL certificate (constre.com + www.constre.com)
+
+2. MAILBOX
+   [ ] Create the mailbox info@constre.com
+   [ ] Send it a test email from your phone and check it arrives
+
+3. UPLOAD THE WEBSITE (to public_html)
+   [ ] Upload: all .html files, assets/, css/, js/, api/, .htaccess
+   [ ] Do NOT upload: tests/, .impeccable/, .claude/, .md and .txt
+       files, .env.example
+
+4. BREVO (sends the form emails) - www.brevo.com
+   [ ] Create a free account
+   [ ] Settings > Senders, Domains > Domains > Add "constre.com"
+       ("authenticate the domain yourself")
+   [ ] Add sender: Constre website <noreply@constre.com>
+   [ ] Settings > SMTP & API > API keys > create key, copy it
+       (starts with xkeysib-, shown only once)
+
+5. DNS RECORDS (iv.lt client area > Domains > constre.com > DNS)
+   [ ] Add Brevo's TXT record "brevo-code:..."
+   [ ] Add Brevo's DKIM record(s), exactly as Brevo shows them
+   [ ] Add DMARC: TXT, name "_dmarc", value:
+       v=DMARC1; p=none; rua=mailto:info@constre.com; adkim=r; aspf=r
+   [ ] SPF: keep ONE record only. Change it only if Brevo asks, to:
+       v=spf1 a mx include:spf.brevo.com redirect=spf.serveriai.lt
+   [ ] Wait until Brevo shows the domain as "Authenticated"
+   [ ] In 2-4 weeks, if the DMARC reports look clean, change
+       p=none to p=quarantine
+
+6. CLOUDFLARE TURNSTILE (spam check) - dash.cloudflare.com
+   [ ] Create a free account (no need to move the domain)
+   [ ] Turnstile > Add widget: hostnames constre.com, www.constre.com,
+       mode "Managed"
+   [ ] Copy the Site key and the Secret key
+
+7. SETTINGS FILE
+   [ ] Copy .env.example to a new file named .env
+   [ ] Fill in: BREVO_API_KEY, TURNSTILE_SITE_KEY,
+       TURNSTILE_SECRET_KEY, and FORM_SECRET (64 random letters/digits)
+   [ ] Upload .env ONE FOLDER ABOVE public_html (next to it, not
+       inside). If that's impossible, put it inside public_html.
+   [ ] Open https://constre.com/.env - it must say Forbidden or Not
+       Found, NEVER show the file
+   [ ] Never email or paste the .env contents anywhere
+
+8. TEST THE LIVE FORM
+   [ ] Open https://constre.com/api/contact.php - you should see
+       {"siteKey":"...","formToken":"..."}
+       (if it says "generic", a setting in .env is missing)
+   [ ] Send the form on https://constre.com/contact.html
+   [ ] The email arrives in info@constre.com INBOX (not spam)
+   [ ] Click Reply: it must go to the address typed in the form
+   [ ] Optional: check your score on www.mail-tester.com (aim 9+/10)
+
+9. FINISHING TOUCHES
+   [ ] .htaccess: remove the # signs in the "https" block (only after
+       SSL works) so everyone lands on https://constre.com
+   [ ] privacy.html is a PLACEHOLDER: add your company code, check the
+       text (Lithuanian is in js/translations.js), remove the
+       "[Placeholder]" line
+   [ ] Optional mailbox filter: from noreply@constre.com
+       -> folder "Website quotes"

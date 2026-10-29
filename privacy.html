@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta.privacyTitle">Privacy Policy | Constre Solutions</title>
+  <meta name="description" data-i18n-attr="content:meta.privacyDescription" content="How Constre Solutions handles the personal data you send through the quote form.">
+  <meta name="theme-color" content="#2B2B2B">
+
+  <!-- Shared settings, company details and page parts (header, footer...).
+       Runs before the page is shown. -->
+  <script src="js/site.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/images/logo-mark.png">
+
+  <!-- Fonts and icons: same as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Michroma&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/light/style.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="privacy">
+
+  <!--
+    PRIVACY POLICY PAGE
+    [PLACEHOLDER] A starting point only, not legal advice. Fill in the
+    bracketed details and have the text checked before relying on it.
+    Lithuanian text is in js/translations.js (keys starting with privacy.).
+  -->
+
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- HEADER: built from js/site.js -->
+  <script>CONSTRE.render('header')</script>
+
+  <main id="main">
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__plane" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-i18n-attr="aria-label:breadcrumb.label">
+          <ol>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li aria-current="page" data-i18n="privacyPage.title">Privacy Policy</li>
+          </ol>
+        </nav>
+        <h1 class="page-hero__title" id="page-title" data-i18n="privacyPage.title">Privacy Policy</h1>
+        <p class="page-hero__lead" data-i18n="privacyPage.lead">How we handle the details you send us.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <p class="placeholder-note" data-i18n="privacy.placeholder">[Placeholder: to be completed and checked]</p>
+
+        <h2 data-i18n="privacy.who.title">Who we are</h2>
+        <p data-i18n="privacy.who.text">Constre Solutions, [company code], F. Mieliausko g. 6, Vilnius, Lithuania. Contact: <a href="mailto:info@constre.com">info@constre.com</a>.</p>
+
+        <h2 data-i18n="privacy.what.title">What we collect and why</h2>
+        <p data-i18n="privacy.what.text">When you send the quote form we receive your name, email address, the project description and, if you give them, your phone number and company. We use them only to answer your request and prepare a quote.</p>
+
+        <h2 data-i18n="privacy.how.title">How it is handled</h2>
+        <p data-i18n="privacy.how.text">The form is delivered to our inbox by an email service, [Brevo, based in the EU]. Cloudflare Turnstile checks that the form is sent by a person, not a bot. The website does not store your message in a database.</p>
+
+        <h2 data-i18n="privacy.keep.title">How long we keep it</h2>
+        <p data-i18n="privacy.keep.text">[For as long as needed to answer your request, and longer only if you become a client and the law requires us to keep records.]</p>
+
+        <h2 data-i18n="privacy.rights.title">Your rights</h2>
+        <p data-i18n="privacy.rights.text">You can ask to see, correct or delete your data by writing to <a href="mailto:info@constre.com">info@constre.com</a>. You can also complain to the State Data Protection Inspectorate (<a href="https://vdai.lrv.lt" rel="noopener">vdai.lrv.lt</a>).</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER: built from js/site.js -->
+  <script>CONSTRE.render('footer')</script>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

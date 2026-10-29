@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta.contactTitle">Contact | Constre Solutions</title>
+  <!-- EDIT: the description shown in search results (Lithuanian version: js/translations.js) -->
+  <meta name="description" data-i18n-attr="content:meta.contactDescription" content="Contact Constre Solutions at F. Mieliausko g. 6, Vilnius. Tell us briefly about your project, and we'll get in touch to discuss how we can work together.">
+  <meta name="theme-color" content="#2B2B2B">
+
+  <!-- Shared settings, company details and page parts (header, footer...).
+       Runs before the page is shown. -->
+  <script src="js/site.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/images/logo-mark.png">
+
+  <!-- Fonts and icons: same as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Michroma&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/light/style.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="contact">
+
+  <!--
+    CONTACT PAGE
+    The header, footer, call-to-action band and company details are shared
+    by all pages and edited once, in js/site.js.
+    Languages: English text is written here, Lithuanian in js/translations.js
+    (matched by data-i18n keys).
+  -->
+
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- HEADER: built from js/site.js (menu links are edited there) -->
+  <script>CONSTRE.render('header')</script>
+
+  <main id="main">
+
+    <!-- ===================================================================
+         PAGE BANNER
+         =================================================================== -->
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__plane" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-i18n-attr="aria-label:breadcrumb.label">
+          <ol>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li aria-current="page" data-i18n="nav.contact">Contact</li>
+          </ol>
+        </nav>
+        <h1 class="page-hero__title" id="page-title" data-i18n="contactPage.title">Contact</h1>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         QUOTE FORM + COMPANY DETAILS + MAP
+         js/main.js checks the fields, then sends them to api/contact.php,
+         which emails them to info@constre.com (setup: CONTACT_FORM_SETUP.md).
+         Spam protection: the hidden "website" field (bots fill it in), a
+         timing check and Cloudflare Turnstile, which stays invisible unless
+         a visitor looks suspicious.
+         =================================================================== -->
+    <section class="section" id="quote" aria-labelledby="contact-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <h2 class="section-title" id="contact-title" data-i18n="contact.title">Request a Quote</h2>
+          <p class="section-lead" data-i18n="contact.lead">Planning construction work or looking for a reliable contracting partner? Tell us briefly about your project, and we'll get in touch to discuss how we can work together.</p>
+        </header>
+
+        <div class="contact">
+          <form class="form" id="contact-form" novalidate data-reveal>
+            <div class="form__row">
+              <div class="field">
+                <label for="name" data-i18n="form.name">Full name</label>
+                <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="name-error">
+                <p class="field__error" id="name-error"></p>
+              </div>
+              <div class="field">
+                <label for="email" data-i18n="form.email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="email-error">
+                <p class="field__error" id="email-error"></p>
+              </div>
+            </div>
+            <div class="form__row">
+              <div class="field">
+                <label for="phone" data-i18n="form.phone">Phone <span class="field__optional">(optional)</span></label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="phone-error">
+                <p class="field__error" id="phone-error"></p>
+              </div>
+              <div class="field">
+                <label for="company" data-i18n="form.company">Company <span class="field__optional">(optional)</span></label>
+                <input id="company" name="company" type="text" autocomplete="organization" maxlength="150" aria-describedby="company-error">
+                <p class="field__error" id="company-error"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="message" data-i18n="form.message">About your project</label>
+              <textarea id="message" name="message" rows="6" maxlength="5000" required aria-describedby="message-error"></textarea>
+              <p class="field__error" id="message-error"></p>
+            </div>
+
+            <!-- Honeypot: hidden from people, but bots fill it in. Leave it empty. -->
+            <div class="form__trap" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <!-- Cloudflare Turnstile: only appears if a check is needed -->
+            <div class="form__turnstile" id="turnstile"></div>
+
+            <div class="form__footer">
+              <button class="btn btn--primary btn--large" type="submit">
+                <span class="btn__label" data-i18n="form.send">Send Request</span>
+                <i class="ph-light ph-arrow-right" aria-hidden="true"></i>
+              </button>
+              <p class="form__status" id="form-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
+            </div>
+            <!-- EDIT: replace privacy.html with your own privacy policy -->
+            <p class="form__privacy" data-i18n="form.privacy">By sending this form you agree that we process your data to answer your request. <a href="privacy.html">Privacy policy</a></p>
+          </form>
+
+          <aside class="contact__info" aria-label="Company details" data-i18n-attr="aria-label:details.label" data-reveal>
+            <!-- Company details + map: built from js/site.js (section 2) -->
+            <script>CONSTRE.render('details')</script>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER: built from js/site.js (company details are edited there) -->
+  <script>CONSTRE.render('footer')</script>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+  <!-- Cloudflare Turnstile (spam check), after main.js, which it calls when ready -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=constreTurnstileReady" async defer></script>
+</body>
+</html>

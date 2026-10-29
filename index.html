@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta.title">Constre Solutions | Residential &amp; Commercial Construction</title>
+  <!-- EDIT: the description shown in search results (Lithuanian version: js/translations.js) -->
+  <meta name="description" data-i18n-attr="content:meta.description" content="Constre Solutions: general construction, building and tank construction of every kind, and engineering and structural solutions. A team of specialists with over 20 years of experience.">
+  <meta name="theme-color" content="#2B2B2B">
+
+  <!-- Shared settings, company details and page parts (header, footer...).
+       Runs before the page is shown. -->
+  <script src="js/site.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/images/logo-mark.png">
+
+  <!-- Fonts (Google Fonts): Michroma for headings, Archivo for body text.
+       Both include Lithuanian letters (ą č ę ė į š ų ū ž).
+       If you change them, update --font-display / --font-body in css/styles.css too. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Michroma&display=swap" rel="stylesheet">
+
+  <!-- Icons: Phosphor Icons (light weight). Browse names at https://phosphoricons.com -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/light/style.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="index">
+
+  <!--
+    LANGUAGES (EN / LT)
+    English text is written in this file (shared parts: js/site.js).
+    Lithuanian text is in js/translations.js.
+    data-i18n="key"       → the element's text is swapped for that key
+    data-i18n-attr="..."  → an attribute is swapped (e.g. aria-label:key)
+    When you edit English text here, update the Lithuanian line with the same key.
+  -->
+
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- HEADER: built from js/site.js (menu links are edited there) -->
+  <script>CONSTRE.render('header')</script>
+
+  <main id="main">
+
+    <!-- ===================================================================
+         2. HERO
+         PHOTO: replace the .placeholder div inside .hero__media with
+         <img src="assets/images/hero.jpg" alt="Describe the photo">
+         (landscape, at least 2000px wide).
+         =================================================================== -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+
+        <div class="hero__content">
+          <h1 class="hero__title" id="hero-title" data-i18n="hero.title">A solid foundation for every project.</h1>
+          <p class="hero__lead" data-i18n="hero.lead">
+            General construction, building and tank construction of every kind, and engineering and
+            structural solutions. A team of specialists with over 20 years of experience.
+          </p>
+          <a class="btn btn--primary btn--large hero__cta" href="contact.html"><span data-i18n="cta.quote">Get a Quote</span> <i class="ph-light ph-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        <!-- EDIT: replace the placeholder with your photo, e.g.
+             <img src="assets/images/hero.jpg" alt="Describe the building" width="1600" height="1200"> -->
+        <div class="hero__media">
+          <div class="placeholder placeholder--dark" role="img" aria-label="Hero photo placeholder" data-i18n-attr="aria-label:hero.photoAlt">
+            <span class="placeholder__label" data-i18n="hero.photoLabel">Hero photo · 1600 × 1200<br>Your best finished project</span>
+          </div>
+          <div class="hero__plane" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         3. SERVICES
+         Six services in a ruled two-column grid. To add one, copy an <li class="service">
+         and give its texts new data-i18n keys (add them to js/translations.js).
+         Icons: change the "ph-..." class (see phosphoricons.com).
+         =================================================================== -->
+    <section class="section section--services" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <h2 class="section-title" id="services-title" data-i18n="services.title">Our Services</h2>
+          <p class="section-lead" data-i18n="services.lead">Reliable construction solutions for projects of every kind.</p>
+          <p class="section-lead" data-i18n="services.intro">We carry out general construction work on residential, industrial, commercial and agricultural projects. We work as main contractor or subcontractor, to a high standard and on schedule.</p>
+        </header>
+
+        <ul class="services">
+          <li class="service" data-reveal>
+            <i class="ph-light ph-hard-hat service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.general.title">General Construction</h3>
+            <p data-i18n="services.general.text">Foundations, concrete work, masonry, structural installation and other general construction works.</p>
+          </li>
+          <li class="service" data-reveal>
+            <i class="ph-light ph-house-line service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.residential.title">Residential Construction</h3>
+            <p data-i18n="services.residential.text">Construction of private houses, apartment buildings and residential districts.</p>
+          </li>
+          <li class="service" data-reveal>
+            <i class="ph-light ph-buildings service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.commercial.title">Industrial &amp; Commercial Construction</h3>
+            <p data-i18n="services.commercial.text">Construction of production, warehouse, logistics and commercial buildings.</p>
+          </li>
+          <li class="service" data-reveal>
+            <i class="ph-light ph-cylinder service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.agricultural.title">Agricultural Buildings &amp; Tanks</h3>
+            <p data-i18n="services.agricultural.text">Slurry and biogas tanks, silage clamps, lagoons and other agricultural structures.</p>
+          </li>
+          <li class="service" data-reveal>
+            <i class="ph-light ph-clipboard-text service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.management.title">Construction Project Management</h3>
+            <p data-i18n="services.management.text">We organise and coordinate construction work, plan its progress, and control deadlines and quality.</p>
+          </li>
+          <li class="service" data-reveal>
+            <i class="ph-light ph-compass-tool service__icon" aria-hidden="true"></i>
+            <h3 class="service__title" data-i18n="services.engineering.title">Engineering &amp; Structural Solutions</h3>
+            <p data-i18n="services.engineering.text">We deliver engineering and structural solutions, and fabricate and install building structures.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         4. PROJECTS (preview)
+         The first three projects from the list in js/site.js (section 4).
+         Add photos and edit projects there; they update on both pages.
+         =================================================================== -->
+    <section class="section section--grey" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <header class="projects-head" data-reveal>
+          <div>
+            <h2 class="section-title" id="projects-title" data-i18n="projects.title">Our Projects</h2>
+            <p class="section-lead" data-i18n="projects.previewLead">Explore our completed construction projects, engineering solutions and the residential districts we are developing now.</p>
+          </div>
+          <a class="btn btn--dark" href="projects.html">
+            <span data-i18n="projects.viewAll">All Projects</span>
+            <i class="ph-light ph-arrow-right" aria-hidden="true"></i>
+          </a>
+        </header>
+
+        <ul class="projects projects--preview">
+          <script>CONSTRE.render('projects', { limit: 3 })</script>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         5. PROCESS
+         Four steps: horizontal timeline from 900px, vertical below.
+         =================================================================== -->
+    <section class="section section--dark section--angled" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <h2 class="section-title" id="process-title" data-i18n="process.title">Our Process</h2>
+          <p class="section-lead" data-i18n="process.lead">Four stages, each signed off with you before the next one starts.</p>
+        </header>
+
+        <ol class="timeline">
+          <li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">01</span>
+            <h3 class="step__title" data-i18n="process.1.title">Consultation</h3>
+            <p data-i18n="process.1.text">We visit the site, listen to your brief and talk through budget, priorities and timing.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">02</span>
+            <h3 class="step__title" data-i18n="process.2.title">Planning</h3>
+            <p data-i18n="process.2.text">Drawings, permits, a written quote and a build programme you can hold us to.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">03</span>
+            <h3 class="step__title" data-i18n="process.3.title">Construction</h3>
+            <p data-i18n="process.3.text">Our team builds to plan, keeps the site safe and tidy, and keeps you updated.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num" aria-hidden="true">04</span>
+            <h3 class="step__title" data-i18n="process.4.title">Handover</h3>
+            <p data-i18n="process.4.text">A joint walk-through, any snags fixed, then documents and keys handed over.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION BAND: built from js/site.js -->
+    <script>CONSTRE.render('cta')</script>
+
+  </main>
+
+  <!-- FOOTER: built from js/site.js (company details are edited there) -->
+  <script>CONSTRE.render('footer')</script>
+
+  <!-- Lithuanian texts first, then the site script that uses them -->
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta.projectsTitle">Projects | Constre Solutions</title>
+  <!-- EDIT: the description shown in search results (Lithuanian version: js/translations.js) -->
+  <meta name="description" data-i18n-attr="content:meta.projectsDescription" content="Residential, industrial, commercial, agricultural and engineering projects by Constre Solutions, a team with over 20 years of experience.">
+  <meta name="theme-color" content="#2B2B2B">
+
+  <!-- Shared settings, company details and page parts (header, footer...).
+       Runs before the page is shown. -->
+  <script src="js/site.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/images/logo-mark.png">
+
+  <!-- Fonts and icons: same as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Michroma&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/light/style.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="projects">
+
+  <!--
+    PROJECTS PAGE
+    The header, footer, call-to-action band and company details are shared
+    by all pages and edited once, in js/site.js.
+    Languages: English text is written here, Lithuanian in js/translations.js
+    (matched by data-i18n keys).
+  -->
+
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- HEADER: built from js/site.js (menu links are edited there) -->
+  <script>CONSTRE.render('header')</script>
+
+  <main id="main">
+
+    <!-- ===================================================================
+         PAGE BANNER
+         =================================================================== -->
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__plane" aria-hidden="true"></div>
+      <div class="container page-hero__content">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-i18n-attr="aria-label:breadcrumb.label">
+          <ol>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li aria-current="page" data-i18n="nav.projects">Projects</li>
+          </ol>
+        </nav>
+        <h1 class="page-hero__title" id="page-title" data-i18n="projectsPage.title">Our Projects</h1>
+        <p class="page-hero__lead" data-i18n="projectsPage.lead">Explore our completed construction work on residential, industrial, commercial and agricultural projects, our specialised engineering solutions, and the residential districts we are developing now.</p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         ALL PROJECTS (filterable)
+         The cards come from the list in js/site.js (section 4): add
+         projects and photos there. Each button's data-filter matches a
+         project's category (developing, residential, commercial, tanks,
+         agricultural or engineering).
+         =================================================================== -->
+    <section class="section section--grey" id="projects">
+      <div class="container">
+        <header class="projects-head" data-reveal>
+          <p class="section-lead" id="filter-label" data-i18n="projects.lead">Choose a category to filter the projects.</p>
+          <!-- Phones: the same categories as a dropdown (js/main.js section 7) -->
+          <div class="filter-select" id="filter-select">
+            <button class="filter-select__button" type="button" role="combobox" aria-haspopup="listbox"
+                    aria-expanded="false" aria-controls="filter-select-list" aria-labelledby="filter-label filter-select-value">
+              <span class="filter-select__value" id="filter-select-value">All Projects</span>
+              <i class="ph-light ph-caret-down filter-select__icon" aria-hidden="true"></i>
+            </button>
+            <!-- The options are copied from the filter buttons by js/main.js -->
+            <ul class="filter-select__list" id="filter-select-list" role="listbox" aria-labelledby="filter-label"></ul>
+          </div>
+          <div class="filters" role="group" aria-label="Filter projects by category" data-i18n-attr="aria-label:projects.filterLabel">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true" data-i18n="filter.all">All Projects</button>
+            <button class="filter" type="button" data-filter="developing" aria-pressed="false" data-i18n="filter.developing">Residential Districts in Development</button>
+            <button class="filter" type="button" data-filter="residential" aria-pressed="false" data-i18n="filter.residential">Residential</button>
+            <button class="filter" type="button" data-filter="commercial" aria-pressed="false" data-i18n="filter.commercial">Industrial &amp; Commercial</button>
+            <button class="filter" type="button" data-filter="tanks" aria-pressed="false" data-i18n="filter.tanks">Tanks</button>
+            <button class="filter" type="button" data-filter="agricultural" aria-pressed="false" data-i18n="filter.agricultural">Agricultural</button>
+            <button class="filter" type="button" data-filter="engineering" aria-pressed="false" data-i18n="filter.engineering">Engineering Solutions</button>
+          </div>
+        </header>
+
+        <ul class="projects" id="projects-grid" data-filter="all">
+          <script>CONSTRE.render('projects')</script>
+        </ul>
+        <p class="projects__status visually-hidden" id="projects-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION BAND: built from js/site.js -->
+    <script>CONSTRE.render('cta')</script>
+  </main>
+
+  <!-- FOOTER: built from js/site.js (company details are edited there) -->
+  <script>CONSTRE.render('footer')</script>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
